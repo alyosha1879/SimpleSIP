@@ -1,3 +1,33 @@
+class Dialog:
+
+    def __init__(self):
+        self.name = "dialog"
+        self.callId = ""
+        self.toTag = ""
+        self.fromTag = ""
+
+    def setStatus(self):
+  
+
+    def getName(self):
+        return self.name
+
+    def findTransaction():
+
+
+class Transaction:
+
+    def __init__(self):
+        self.branch = ""
+        self.csqe = ""
+
+
+
+
+a = Dialog()
+print a.name
+
+
 def handle_Request():
     pass
 
