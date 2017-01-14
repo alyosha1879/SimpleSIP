@@ -7,14 +7,13 @@ class SIP:
 
     def __init__(self, msg):
 
-        startLine, headerFields = self.parseMsg(msg)
-
         self.SIPVersion = None
         self.method = None
         self.requestURI = None
         self.statusCode = None
         self.reasonPhrase = None
 
+        startLine, headerFields = self.parseMsg(msg)
         self.parseStartLine(startLine)
         self.parseHeaderFields(headerFields)
 
