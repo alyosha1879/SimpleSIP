@@ -1,7 +1,6 @@
 import testData
 
 def getSIPMessage(msg): 
- 
     return msg.split('\r\n\r\n')[0]
 
 class SIP:
@@ -12,7 +11,7 @@ class SIP:
 
         self.SIPVersion = None
 
-        self.Method = None
+        self.method = None
         self.requestURI = None
 
         self.statusCode = None
@@ -29,19 +28,21 @@ class SIP:
         startLine = msg.split('\r\n')[0]
         headerFields = msg.split('\r\n')[1:]
 
-        #print startLine
-        #print headerFields
-
         return [startLine, headerFields]
 
     def parseStartLine(self, string):
 
-        pass
-        #return self._parseRequestLine(string)
-        #return self._parserStatusLine(string)
-         
-    def parseHeaderFields(self, msg):
+        # Request-Line  =  Method SP Request-URI SP SIP-Version CRLF
+        # Status-Line  =  SIP-Version SP Status-Code SP Reason-Phrase CRLF
 
+        if string.split(" ")[2] == "SIP/2.0":
+           self.method, self.requestURI, self.SIPVersion = string.split(" ")
+        else:
+           self.SIPVersion, self.statusCode, self.reasonPhrase = string.split(" ")
+             
+    def parseHeaderFields(self, msg):
+        
+        #print msg
         pass
 
 """ debug code. """
@@ -49,7 +50,9 @@ class SIP:
 #print testData.SOCKET_BUFFER
 SIPMsg = getSIPMessage(testData.SOCKET_BUFFER)
 testClass = SIP(SIPMsg)
-
+print testClass.method
+print testClass.requestURI
+print testClass.SIPVersion
 
 """
         self.Via = self.getVia()
