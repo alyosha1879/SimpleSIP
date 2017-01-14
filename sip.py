@@ -10,10 +10,8 @@ class SIP:
         startLine, headerFields = self.parseMsg(msg)
 
         self.SIPVersion = None
-
         self.method = None
         self.requestURI = None
-
         self.statusCode = None
         self.reasonPhrase = None
 
