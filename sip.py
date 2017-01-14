@@ -1,4 +1,4 @@
-import testData
+import utils
 
 def getSIPMessage(msg): 
     return msg.split('\r\n\r\n')[0]
@@ -7,17 +7,21 @@ class SIP:
 
     def __init__(self, msg):
 
+        self.msg = msg
+
+        self.startLine = None
         self.SIPVersion = None
 
-        # Request-Line.
+        # If startLine is a Request-Line.
         self.method = None
         self.requestURI = None
 
-        # Status-Line.
+        # If startLine is a Status-Line.
         self.statusCode = None
         self.reasonPhrase = None
 
         # HeaderFields.
+        self.headerFields = None
         self.via = None
         self.maxForward = None
         self.From = None
@@ -30,32 +34,31 @@ class SIP:
         self.contentType = None
         self.contentDisposition = None
 
-        startLine, headerFields = self.parseMsg(msg)
-        self.parseStartLine(startLine)
-        self.parseHeaderFields(headerFields)
+        self.parseMsg()
+        self.parseStartLine()
+        self.parseHeaderFields()
 
-    def parseMsg(self, msg):
+    def parseMsg(self):
 
         # 1st Line is Start-Line.
         # Remaing Lines are SIP-HeaderFiedls.
 
-        startLine = msg.split('\r\n')[0]
-        headerFields = msg.split('\r\n')[1:]
+        self.startLine = self.msg.split('\r\n')[0]
+        self.headerFields = self.msg.split('\r\n')[1:]
 
-        return [startLine, headerFields]
 
-    def parseStartLine(self, string):
+    def parseStartLine(self):
 
         # Start-Line = Request-Line or Status-Line.
         # Request-Line  =  Method SP Request-URI SP SIP-Version CRLF
         # Status-Line  =  SIP-Version SP Status-Code SP Reason-Phrase CRLF
 
-        if string.split(" ")[2] == "SIP/2.0":
-           self.method, self.requestURI, self.SIPVersion = string.split(" ")
+        if self.startLine.split(" ")[2] == "SIP/2.0":
+           self.method, self.requestURI, self.SIPVersion = self.startLine.split(" ")
         else:
-           self.SIPVersion, self.statusCode, self.reasonPhrase = string.split(" ")
+           self.SIPVersion, self.statusCode, self.reasonPhrase = self.startLine.split(" ")
              
-    def parseHeaderFields(self, msg):
+    def parseHeaderFields(self):
         
         self.setVia()
         self.setMaxForward()
@@ -78,10 +81,11 @@ class SIP:
     def setContact(self):
         pass
 
+
 """ debug code. """
 
 #print testData.SOCKET_BUFFER
-SIPMsg = getSIPMessage(testData.SOCKET_BUFFER)
+SIPMsg = getSIPMessage(utils.SOCKET_BUFFER)
 testClass = SIP(SIPMsg)
 print testClass.method
 print testClass.requestURI
