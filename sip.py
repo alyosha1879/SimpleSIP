@@ -9,11 +9,11 @@ class SIP:
 
         self.SIPVersion = None
 
-        # If Request-Line.
+        # Request-Line.
         self.method = None
         self.requestURI = None
 
-        # If Status-Line.
+        # Status-Line.
         self.statusCode = None
         self.reasonPhrase = None
 
@@ -46,6 +46,7 @@ class SIP:
 
     def parseStartLine(self, string):
 
+        # Start-Line = Request-Line or Status-Line.
         # Request-Line  =  Method SP Request-URI SP SIP-Version CRLF
         # Status-Line  =  SIP-Version SP Status-Code SP Reason-Phrase CRLF
 
