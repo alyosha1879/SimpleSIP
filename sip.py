@@ -8,10 +8,27 @@ class SIP:
     def __init__(self, msg):
 
         self.SIPVersion = None
+
+        # If Request-Line.
         self.method = None
         self.requestURI = None
+
+        # If Status-Line.
         self.statusCode = None
         self.reasonPhrase = None
+
+        # HeaderFields.
+        self.via = None
+        self.maxForward = None
+        self.From = None
+        self.contact = None
+        self.to = None
+        self.callId = None
+        self.cseq = None
+        self.expires = None
+        self.contentLength = None
+        self.contentType = None
+        self.contentDisposition = None
 
         startLine, headerFields = self.parseMsg(msg)
         self.parseStartLine(startLine)
