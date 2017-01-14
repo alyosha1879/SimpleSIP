@@ -57,7 +57,25 @@ class SIP:
              
     def parseHeaderFields(self, msg):
         
-        #print msg
+        self.setVia()
+        self.setMaxForward()
+        self.setRecordRoute()
+        self.setFrom()
+        self.setContact()
+    
+    def setVia(self):
+        pass
+
+    def setMaxForward(self):
+        pass
+
+    def setRecordRoute(self):
+        pass
+
+    def setFrom(self):
+        pass
+
+    def setContact(self):
         pass
 
 """ debug code. """
