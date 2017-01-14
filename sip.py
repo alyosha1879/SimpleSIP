@@ -1,41 +1,55 @@
-import testData.py
+import testData
+
+def getSIPMessage(msg): 
+ 
+    return msg.split('\r\n\r\n')[0]
 
 class SIP:
 
-    def __init__(msg):
+    def __init__(self, msg):
 
-        Start-Line, HeaderFields = parseMsg(msg)
+        startLine, headerFields = self.parseMsg(msg)
 
-        self.SIP-Version = None
+        self.SIPVersion = None
 
         self.Method = None
-        self.Request-URI = None
+        self.requestURI = None
 
-        self.Status-Code = None
-        self.Reason-Phrase = None
+        self.statusCode = None
+        self.reasonPhrase = None
 
-        self.parseFirst-Line(Start-Line)
-        self.setHeaderFields(headerFields)
+        self.parseStartLine(startLine)
+        self.parseHeaderFields(headerFields)
 
-    def parseMsg(msg):
+    def parseMsg(self, msg):
 
         # 1st Line is Start-Line.
         # Remaing Lines are SIP-HeaderFiedls.
 
-        Start-Line = msg.split('\r\n')[0]
-        HeaderFields = msg.split('\r\n')[1:]
+        startLine = msg.split('\r\n')[0]
+        headerFields = msg.split('\r\n')[1:]
 
-       return Start-Line, HeaderFields
+        #print startLine
+        #print headerFields
 
-    def parseStartLine(string):
+        return [startLine, headerFields]
 
-        return self._parseRequestLine(string)
-
-        return self._parserStatusLine(string)
-         
-    def parseHeaderFields(msg):
+    def parseStartLine(self, string):
 
         pass
+        #return self._parseRequestLine(string)
+        #return self._parserStatusLine(string)
+         
+    def parseHeaderFields(self, msg):
+
+        pass
+
+""" debug code. """
+
+#print testData.SOCKET_BUFFER
+SIPMsg = getSIPMessage(testData.SOCKET_BUFFER)
+testClass = SIP(SIPMsg)
+
 
 """
         self.Via = self.getVia()
