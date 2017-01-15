@@ -9,6 +9,7 @@ class SIP:
 
         self.msg = msg
 
+        # Start-Line = Request-Line or Status-Line.
         self.startLine = None
         self.SIPVersion = None
 
@@ -22,17 +23,13 @@ class SIP:
 
         # HeaderFields.
         self.headerFields = None
-        self.via = None
-        self.maxForward = None
+
+        self.Request_URI = None
+        self.To = None
         self.From = None
-        self.contact = None
-        self.to = None
-        self.callId = None
-        self.cseq = None
-        self.expires = None
-        self.contentLength = None
-        self.contentType = None
-        self.contentDisposition = None
+        self.Call_ID = None
+        self.Cseq = None
+        self.Contact = None
 
         self.parseMsg()
         self.parseStartLine()
@@ -59,29 +56,56 @@ class SIP:
            self.SIPVersion, self.statusCode, self.reasonPhrase = self.startLine.split(" ")
              
     def parseHeaderFields(self):
-        
-        self.setVia()
-        self.setMaxForward()
-        self.setRecordRoute()
+
+        headerDict = {}
+
+        # HeaderLied-format is "Name: Values1;Value2;Value3..."
+        for line in self.headerFields:
+            index = line.find(':')
+            name = line[:index]
+            values = line[index+1:]
+ 
+            # Number of Via-header may be more than one.
+            if not name == 'Via':
+                headerDict[name] = values
+            else:
+                if not headerDict.get(name):
+                    headerDict[name] = values
+                else:
+                    headerDict[name] += ","
+                    headerDict[name] += values
+
+        self.setRequest_URI()
+        self.setTo()
         self.setFrom()
+        self.setCall_ID()
+        self.setCseq()
         self.setContact()
-    
-    def setVia(self):
-        pass
 
-    def setMaxForward(self):
-        pass
+    def setRequest_URI(self):
 
-    def setRecordRoute(self):
-        pass
+        return
+
+    def setTo(self):
+
+        return
 
     def setFrom(self):
-        pass
+
+        return
+
+    def setCall_ID(self):
+
+        return
+
+    def setCseq(self):
+
+        return
 
     def setContact(self):
-        pass
 
-
+        return
+         
 """ debug code. """
 
 #print testData.SOCKET_BUFFER
