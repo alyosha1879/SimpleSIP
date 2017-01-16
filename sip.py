@@ -31,11 +31,25 @@ class SIP:
         self.headerFields = None
         self.headerDict = {}
 
+        # Request-URI Line
         self.Request_URI = None
+
+        # To Line
         self.To = None
+        self.ToTag = None
+
+        # From Line
         self.From = None
+        self.FromTag = None
+
+        # Call-ID Line
         self.Call_ID = None
+
+        # Cseq Line
         self.CSeq = None
+        self.method = None
+
+        # Contact Line
         self.Contact = None
 
         self.parseMsg()
@@ -96,13 +110,17 @@ class SIP:
 
     def setTo(self):
 
-        self.To = self.headerDict['To']
-        
+        #self.To, self.ToTag = self.headerDict['To'].split(';tag=')
+        #print self.To
+        #print self.ToTag
+        return
 
     def setFrom(self):
 
         self.From = self.headerDict['From']
         print self.From
+
+        print self.headerDict['From'].split(';tag=')[1]
 
     def setCall_ID(self):
 
@@ -110,7 +128,7 @@ class SIP:
 
     def setCseq(self):
 
-        self.CSeq = self.headerDict['CSeq']
+        self.CSeq, self.method = self.headerDict['CSeq'].split(' ')
 
     def setContact(self):
 
@@ -124,6 +142,8 @@ testClass = SIP(SIPMsg)
 print testClass.method
 print testClass.requestURI
 print testClass.SIPVersion
+print testClass.headerDict
+print testClass.method
 
 """
         self.Via = self.getVia()
