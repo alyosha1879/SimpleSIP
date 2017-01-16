@@ -9,6 +9,12 @@ class SIP:
 
         self.msg = msg
 
+        # SIP-Message-Format
+	# 
+	# Start-Line: Request-Line or Status-Line.
+	# HeaderFields: Name: Values1;Value2;Value3...
+	# SDP:
+
         # Start-Line = Request-Line or Status-Line.
         self.startLine = None
         self.SIPVersion = None
@@ -23,12 +29,13 @@ class SIP:
 
         # HeaderFields.
         self.headerFields = None
+        self.headerDict = {}
 
         self.Request_URI = None
         self.To = None
         self.From = None
         self.Call_ID = None
-        self.Cseq = None
+        self.CSeq = None
         self.Contact = None
 
         self.parseMsg()
@@ -57,23 +64,24 @@ class SIP:
              
     def parseHeaderFields(self):
 
-        headerDict = {}
-
         # HeaderLied-format is "Name: Values1;Value2;Value3..."
         for line in self.headerFields:
             index = line.find(':')
             name = line[:index]
-            values = line[index+1:]
+            values = line[index+1:][1:] #[:1] is to remove WS.
  
             # Number of Via-header may be more than one.
-            if not name == 'Via':
-                headerDict[name] = values
-            else:
-                if not headerDict.get(name):
-                    headerDict[name] = values
+            if name == 'Via':
+                if not self.headerDict.get(name):
+                    self.headerDict[name] = values
                 else:
-                    headerDict[name] += ","
-                    headerDict[name] += values
+                    self.headerDict[name] += ","
+                    self.headerDict[name] += values
+            else:
+		self.headerDict[name] = values
+
+        #print headerDict.keys()
+	#print headerDict.values()
 
         self.setRequest_URI()
         self.setTo()
@@ -88,23 +96,25 @@ class SIP:
 
     def setTo(self):
 
-        return
+        self.To = self.headerDict['To']
+        
 
     def setFrom(self):
 
-        return
+        self.From = self.headerDict['From']
+        print self.From
 
     def setCall_ID(self):
 
-        return
+        self.Call_ID = self.headerDict['Call-ID']
 
     def setCseq(self):
 
-        return
+        self.CSeq = self.headerDict['CSeq']
 
     def setContact(self):
 
-        return
+        self.Contact = self.headerDict['Contact']
          
 """ debug code. """
 
