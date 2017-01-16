@@ -110,17 +110,18 @@ class SIP:
 
     def setTo(self):
 
-        #self.To, self.ToTag = self.headerDict['To'].split(';tag=')
-        #print self.To
-        #print self.ToTag
-        return
+        if 'tag=' in self.headerDict['To']:
+            self.To, self.ToTag = self.headerDict['To'].split(';tag=')
+        else:
+            self.To = self.headerDict['To']
 
     def setFrom(self):
 
-        self.From = self.headerDict['From']
-        print self.From
-
-        print self.headerDict['From'].split(';tag=')[1]
+        if 'tag=' in self.headerDict['From']:
+            self.From, self.FromTag  = self.headerDict['From'].split(';tag=')
+        else:
+            self.From = self.headerDict['From']
+        
 
     def setCall_ID(self):
 
@@ -143,8 +144,8 @@ print testClass.method
 print testClass.requestURI
 print testClass.SIPVersion
 print testClass.headerDict
-print testClass.method
-
+print testClass.To
+print testClass.ToTag
 """
         self.Via = self.getVia()
         self.MAX-Forward = self.getMax-Forwad(self.headerFields)
