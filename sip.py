@@ -138,7 +138,7 @@ class SIP:
 """ debug code. """
 
 #print testData.SOCKET_BUFFER
-SIPMsg = getSIPMessage(utils.SOCKET_BUFFER)
+SIPMsg = getSIPMessage(utils.TEST_BUFFER2)
 testClass = SIP(SIPMsg)
 print testClass.method
 print testClass.requestURI
