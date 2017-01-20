@@ -9,13 +9,13 @@ class SIP:
 
         self.msg = msg
 
-        # SIP-Message-Format
-	# 
-	# Start-Line: Request-Line or Status-Line.
-	# HeaderFields: Name: Values1;Value2;Value3...
-	# SDP:
+        #  generic-message  
+	#  start-line
+        #  *message-header
+        #  CRLF
+        #  [ message-body ]
 
-        # Start-Line = Request-Line or Status-Line.
+        #  start-line = Request-Line / Status-Line
         self.startLine = None
         self.SIPVersion = None
 
@@ -78,24 +78,19 @@ class SIP:
              
     def parseHeaderFields(self):
 
-        # HeaderLied-format is "Name: Values1;Value2;Value3..."
+        # HeaderLied-format is "Name: Values"
         for line in self.headerFields:
             index = line.find(':')
             name = line[:index]
-            values = line[index+1:][1:] #[:1] is to remove WS.
+            values = line[index+1:][1:] #[:1] can't remove WS.
  
-            # Number of Via-header may be more than one.
-            if name == 'Via':
-                if not self.headerDict.get(name):
-                    self.headerDict[name] = values
-                else:
-                    self.headerDict[name] += ","
-                    self.headerDict[name] += values
-            else:
-		self.headerDict[name] = values
+            # self.headerDict[Name] = [Values1, Values2, Values3]
+            if not self.headerDict.get(name):
+                self.headerDict[name] = []
+            self.headerDict[name].append(values)
 
-        #print headerDict.keys()
-	#print headerDict.values()
+        print self.headerDict.keys()
+        print self.headerDict.values()
 
         self.setRequest_URI()
         self.setTo()
@@ -129,7 +124,8 @@ class SIP:
 
     def setCseq(self):
 
-        self.CSeq, self.method = self.headerDict['CSeq'].split(' ')
+        #self.CSeq, self.method = self.headerDict['CSeq'].split(' ')
+        pass
 
     def setContact(self):
 
@@ -138,7 +134,7 @@ class SIP:
 """ debug code. """
 
 #print testData.SOCKET_BUFFER
-SIPMsg = getSIPMessage(utils.TEST_BUFFER2)
+SIPMsg = getSIPMessage(utils.TEST_BUFFER)
 testClass = SIP(SIPMsg)
 print testClass.method
 print testClass.requestURI
