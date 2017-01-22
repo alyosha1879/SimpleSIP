@@ -14,3 +14,7 @@
 ・Greenletではユーザが明示的にコンテキストスィッチをする必要がある。  
 ・SIPだとリクエストを受け取った場合、送信元へのレスポンスとリクエストを同時に行うため、単純なサーバ動作とはならない。
 ・参考URL→  http://eventlet.net/doc/design_patterns.html
+
+2017/1/22
+・RequestURIがRFC上でBNF記法で書かれていたので、せっかくなのでgrakoを用いてASTで解析してみる。JSON形式で出力されるらしい。当然普通にparseしたほうが早いけど。
+・しばらくgrakoとASTで遊べそう。(*^-^*)
