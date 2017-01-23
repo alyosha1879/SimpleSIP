@@ -1,3 +1,5 @@
+from urlparse import urlparse
+
 class SIPURI():
 
     # SIP-URI = "sip:" [ userinfo ] hostport uri-parameters [ headers ]
@@ -6,11 +8,9 @@ class SIPURI():
     # uri-parameters = *( ";" uri-parameter)
     # uri-parameter = transport-param / user-param / method-param/ ttl-param /    maddr-param / lr-param / other-param
 
-    def __init__(sipURI):
+    def __init__(uri):
         
-        self.parser(sipURI)
-
-        self.schema = None
+        self.scheme = None
         self.userinfo = None
         self.user = None
         self.telephone-subscriber = None
@@ -20,6 +20,13 @@ class SIPURI():
         self.port = None
         self.uri-parameters = []
 
-    def parser(self, sipURI):
+        self.parser(uri)
 
-    
+    def parser(self, uri):
+
+        o = urlparse(uri)
+
+        print o.shceme
+        print o.netloc
+
+
