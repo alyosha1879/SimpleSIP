@@ -24,6 +24,9 @@ class SIPURI():
 
     def parser(self, uri):
 
+        self.schema = uri.split(':')[0]
+        
+
         o = urlparse(uri)
 
         print o.shceme
