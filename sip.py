@@ -1,4 +1,4 @@
-import utils
+from test import testData
 
 def getSIPMessage(msg): 
     return msg.split('\r\n\r\n')[0]
@@ -134,7 +134,7 @@ class SIP:
 """ debug code. """
 
 #print testData.SOCKET_BUFFER
-SIPMsg = getSIPMessage(utils.TEST_BUFFER)
+SIPMsg = getSIPMessage(testData.INVITE_STR)
 testClass = SIP(SIPMsg)
 print testClass.method
 print testClass.requestURI
