@@ -1,4 +1,8 @@
-from ..test import testData
+import sys
+sys.path.append('/root/git-test/SimpleSIP/testdir')
+
+import testData
+
 
 class SIPURI():
 
@@ -29,8 +33,10 @@ class SIPURI():
 
         if "@" in uri:
             userinfo = restURI.split('@')[0]
+            self.userinfo = userinfo
+            self.parseUserinfo(userinfo)
 
-    def parseUserinfo(userinfo):
+    def parseUserinfo(self, userinfo):
 
         if ":" in userinfo:
             self.user = userinfo.split(':')[0]
@@ -38,7 +44,8 @@ class SIPURI():
         else:
             self.user = userinfo
 
-testURI = testData.SIPURI1
+testURI = testData.SIPURI3
+print testURI
 test = SIPURI(testURI)
 
 print test.schema
