@@ -9,41 +9,63 @@ class Registtar(SIPEntity):
         self.msg = msg
 
         # only handle_register_request
-        if msg.request != "Register":
+        if not msg.request == "Register":
             return
 
-    　　# RFC3261 "10.3 Processing REGISTER Requests"
+        # RFC3261 "10.3 Processing REGISTER Requests"
 
         # Step1
         if not self.canBindRequestURI(msg.requestURI):
+            # Domain not allowed.
             return
 
         # Step2
-        self.processHField(msg.):
+        self.processRequireHF(msg.requireHF)
 
-        self.handl_require_header
-        self.auth_UAC
+        # Step3
+        self.authUAC()
 
+        # Step4
+        self.
+
+        # Step5
+        self.extractAOR(msg.toHF)
+
+        # Step6
+        self.checkContactHF(msg.contactHF)
+
+        # Step7
+        self.processContactHF(msg.contactHF)
+
+        # Step8
         self.send_response(200)
 
-    def handle_response():
 
+    def handle_response():
         # only handle_register_response:
+
         assert(self.isMsgRequest("REGISTER"))
 
+    def send_response(code):
+
+
+
+
+
+
     def canBindRequestURI(self, requestURI):
+        # The registrar inspects the Request-URI to determine whether it has 
+        # access to bindings for the domain identified in the Request-URI.
 
-        localAddrList = getLocalAddrList()
+        if CHECK_DOMAIN == False:
+            # Allow all domains.
+            return
 
-        if requestURI in localAddrList:
-            return True
         else:
-            return False
+            allowdDomainList = readDomainList()
+            
+            if uriDomain in allowedDomainList:
+                return True
+            else:
+                return False
 
-
-
-    def fail_check_URI():
-        
-        host = msg.requestURI
-
-        host == 
